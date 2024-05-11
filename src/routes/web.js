@@ -40,6 +40,12 @@ route.get('/api/articles/category/:category', Scrapper.getArticleByCategory);
 route.get('/api/articles/category/:category/:page', Scrapper.getArticleByCategoryOnPage);
 route.get('/api/article/:category_slug/:article_slug', Scrapper.getArticleDetail);
 
+route.get('/test', (req, res) => {
+    res.send(
+        req.query
+    )
+});
+
 route.get('*', (req, res) => {
     res.status(404).json({
         method: req.method,
