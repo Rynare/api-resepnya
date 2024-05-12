@@ -1,15 +1,14 @@
-var express = require("express")
-var cors = require("cors");
+const express = require("express")
+const cors = require("cors");
 const { route } = require("./src/routes/web");
+const { CORS_OPTION } = require("./src/routes/cors");
 require('dotenv').config();
 
-var app = express()
-
-app.use(cors())
-
-app.use(route);
-
+const app = express()
 const port = process.env.PORT || 3000;
+
+app.use(cors(CORS_OPTION))
+app.use(route);
 
 app.listen(port, () => {
     try {

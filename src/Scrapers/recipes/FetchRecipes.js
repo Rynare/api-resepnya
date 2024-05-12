@@ -36,7 +36,7 @@ const fetchRecipes = (req, res, response) => {
                 return total
             }
         }
-        res.send({
+        res.json({
             method: req.method,
             status: true,
             pages: getTotalPages($("._pagination-button a.last").attr("href")),

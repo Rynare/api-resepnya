@@ -2,16 +2,8 @@ const { Scrapper } = require('../Scrapers/Scrapper');
 
 const route = require('express').Router();
 
-route.get('/', (req, res) => {
-    res.send({
-        method: req.method,
-        message: 'Read about API documentation below.',
-        documentation: 'https://github.com/Rynare/kulinery-api',
-    });
-});
-
-route.get('/api', (req, res) => {
-    res.send({
+route.get(['/', '/api'], (req, res) => {
+    res.json({
         method: req.method,
         message: 'Read about API documentation below.',
         documentation: 'https://github.com/Rynare/kulinery-api',
@@ -39,12 +31,6 @@ route.get('/api/articles/categories', Scrapper.getArticleCategories);
 route.get('/api/articles/category/:category', Scrapper.getArticleByCategory);
 route.get('/api/articles/category/:category/:page', Scrapper.getArticleByCategoryOnPage);
 route.get('/api/article/:category_slug/:article_slug', Scrapper.getArticleDetail);
-
-route.get('/test', (req, res) => {
-    res.send(
-        req.query
-    )
-});
 
 route.get('*', (req, res) => {
     res.status(404).json({

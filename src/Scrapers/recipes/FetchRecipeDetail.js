@@ -78,7 +78,7 @@ const fetchRecipeDetail = async (req, res, response) => {
         object.ingredients = ingredientsArr;
         object.steps = stepArr;
 
-        res.send({
+        res.json({
             method: req.method,
             status: true,
             results: object

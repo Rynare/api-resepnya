@@ -31,7 +31,7 @@ const SiteMap = {
                 });
             })
 
-            return res.send({
+            return res.json({
                 method: req.method,
                 status: true,
                 results: categories
@@ -58,7 +58,7 @@ const SiteMap = {
                 });
             })
 
-            return res.send({
+            return res.json({
                 method: req.method,
                 status: true,
                 results: categories

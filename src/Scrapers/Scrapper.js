@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { AxiosServices } = require('../helper/axios-services');
+const { AxiosServices } = require('../service/axios-services');
 const { SiteMap } = require('./SiteMap');
 const { fetchArticleDetail } = require('./articles/FetchArticleDetail');
 const { fetchArticles } = require('./articles/FetchArticles');
@@ -14,7 +14,7 @@ async function fetchDataAndProcess(req, res, url, processDataFunc) {
         const response = await AxiosServices.fetchData(url);
         return processDataFunc(req, res, response);
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             method: req.method,
             status: false,
             error: {

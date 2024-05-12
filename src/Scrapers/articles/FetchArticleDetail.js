@@ -25,7 +25,7 @@ const fetchArticleDetail = async (req, res, response) => {
         article_object.date_published = published;
         article_object.description = filtered;
 
-        res.send({
+        res.json({
             method: req.method,
             status: true,
             results: article_object
