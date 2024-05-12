@@ -19,8 +19,8 @@ route.get(['/', '/api'], (req, res) => {
 route.get('/api/recipes', Scrapper.getRecipes);
 route.get('/api/recipes/page/:page', Scrapper.getRecipesOnPage);
 route.get('/api/recipes/categories', Scrapper.getRecipeCategories);
-route.get('/api/recipes/category/:category', Scrapper.getRecipesByCategory);
-route.get('/api/recipes/category/:category/:page', Scrapper.getRecipesByCategoryOnPage);
+route.get('/api/recipes/category/:category_slug', Scrapper.getRecipesByCategory);
+route.get('/api/recipes/category/:category_slug/:page', Scrapper.getRecipesByCategoryOnPage);
 route.get('/api/recipes/search/:keyword', Scrapper.getSearchRecipes);
 route.get('/api/recipes/search/:keyword/:page', Scrapper.getSearchRecipesOnPage);
 route.get('/api/recipe/:slug', Scrapper.getRecipeDetail);
@@ -28,8 +28,8 @@ route.get('/api/recipe/:slug', Scrapper.getRecipeDetail);
 route.get('/api/articles', Scrapper.getArticles);
 route.get('/api/articles/page/:page', Scrapper.getArticlesOnPage);
 route.get('/api/articles/categories', Scrapper.getArticleCategories);
-route.get('/api/articles/category/:category', Scrapper.getArticleByCategory);
-route.get('/api/articles/category/:category/:page', Scrapper.getArticleByCategoryOnPage);
+route.get('/api/articles/category/:category_slug', Scrapper.getArticleByCategory);
+route.get('/api/articles/category/:category_slug/:page', Scrapper.getArticleByCategoryOnPage);
 route.get('/api/article/:category_slug/:article_slug', Scrapper.getArticleDetail);
 
 route.get('*', (req, res) => {

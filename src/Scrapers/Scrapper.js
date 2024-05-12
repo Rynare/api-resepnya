@@ -38,13 +38,13 @@ const Scrapper = {
     },
 
     getRecipesByCategory: async (req, res) => {
-        const category = req.params.category;
+        const category = req.params.category_slug;
         const url = `${baseUrl}/resep/${category}`;
         return fetchDataAndProcess(req, res, url, fetchRecipes);
     },
 
     getRecipesByCategoryOnPage: async (req, res) => {
-        const category = req.params.category;
+        const category = req.params.category_slug;
         const page = req.params.page;
         const url = `${baseUrl}/resep/${category}/page/${page}`;
         return fetchDataAndProcess(req, res, url, fetchRecipes);
@@ -86,13 +86,13 @@ const Scrapper = {
     },
 
     getArticleByCategory: async (req, res) => {
-        const category = req.params.category;
+        const category = req.params.category_slug;
         const url = `${baseUrl}/${category}`;
         return fetchDataAndProcess(req, res, url, fetchArticles);
     },
 
     getArticleByCategoryOnPage: async (req, res) => {
-        const category = req.params.category;
+        const category = req.params.category_slug;
         const page = req.params.page;
         const url = `${baseUrl}/${category}/page/${page}`;
         return fetchDataAndProcess(req, res, url, fetchArticles);
