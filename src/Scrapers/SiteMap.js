@@ -1,5 +1,8 @@
 const cheerio = require('cheerio');
 const { URLSupport } = require('./URLSupport');
+require("dotenv").config()
+
+const HOST = process.env.HOST
 
 const SITE_MAP_SECTION = [, "artikel", "kategori artikel", "resep", "kategori resep", ,]
 function getSectionOrder(sectionName) {
@@ -27,7 +30,7 @@ const SiteMap = {
                 categories.push({
                     slug: slug,
                     name: category,
-                    url: url,
+                    url: `${HOST}/api/recipes/category/${slug}`,
                 });
             })
 
@@ -54,7 +57,7 @@ const SiteMap = {
                 categories.push({
                     slug: slug,
                     name: category,
-                    url: url,
+                    url: `${HOST}/api/articles/category/${slug}`,
                 });
             })
 
