@@ -10,6 +10,7 @@ const fetchRecipeDetail = async (req, res, response) => {
 
         const elementHeader = $('._recipe-header');
         const elementTips = $('._rich-content');
+        const elementTags = $('._global-tags.section-space');
         const elementIngredients = $('div._recipe-ingredients');
         const elementTutorial = $('._recipe-steps');
 
@@ -62,6 +63,14 @@ const fetchRecipeDetail = async (req, res, response) => {
             tipsArr.push(li)
         })
 
+        let tagsArr = [];
+        elementTags.find("a").each((i,e) => {
+            const rawHref = $(e).attr("href")
+            const href = new URLSearchParams(rawHref)
+            const tag = href.get("filters")
+            tagsArr.push(tag)
+        })
+
         const dataPublishedRaw = elementHeader.children().last().find('.author').text().split('|')[1].trim()
         const dataPublishedFormated = moment(dataPublishedRaw, 'MMMM D, YYYY', 'id').format('YYYY-MM-DD');
 
@@ -77,6 +86,7 @@ const fetchRecipeDetail = async (req, res, response) => {
         object.ingredients = ingredientsArr;
         object.steps = stepArr;
         object.tips = tipsArr;
+        object.tags = tagsArr;
 
         res.json({
             method: req.method,
