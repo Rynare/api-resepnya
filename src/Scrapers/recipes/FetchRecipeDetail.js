@@ -9,13 +9,15 @@ const fetchRecipeDetail = async (req, res, response) => {
         let object = {};
 
         const elementHeader = $('._recipe-header');
+        const elementTips = $('._rich-content');
         const elementIngredients = $('div._recipe-ingredients');
         const elementTutorial = $('._recipe-steps');
 
         let ingredientsArr = [];
+
         elementIngredients.find('.d-flex').each((i, e) => {
             let term = '';
-            let quantity = $(e).find('.part').text().trim();
+            let quantity = $(e).find('.part').attr("data-base-quantity");
             let metaIngredient = $(e).find('.item').text().trim().split('\r\t')[0].split('\t');
             let productLink = $(e).find('.item').find('a').text().trim().split('\r\t')[0].split('\t')
             let ingredients
@@ -54,6 +56,12 @@ const fetchRecipeDetail = async (req, res, response) => {
             elementHeader.find('._recipe-features a.icon_fire').text().trim()
         ]
 
+        let tipsArr = [];
+        elementTips.find("ol li").each((i, e) => {
+            li = $(e).text().trim()
+            tipsArr.push(li)
+        })
+
         const dataPublishedRaw = elementHeader.children().last().find('.author').text().split('|')[1].trim()
         const dataPublishedFormated = moment(dataPublishedRaw, 'MMMM D, YYYY', 'id').format('YYYY-MM-DD');
 
@@ -61,15 +69,14 @@ const fetchRecipeDetail = async (req, res, response) => {
         object.thumbnail = elementHeader.find('picture .image').attr('data-src');
         object.author = elementHeader.children().last().find('.author').text().split('|')[0].trim()
         object.datePublished = dataPublishedFormated
-        object.desc = elementHeader.find('.excerpt').text().trim();
-        object.servings = elementHeader.find('._kritique-rate div').attr('style');
+        object.description = elementHeader.find('.excerpt').text().trim();
         object.duration = URLSupport.getParameter(elementHeader.find('._recipe-features').find('a:not([data-tracking])').attr("href"), "time");
         object.difficulty = URLSupport.getPathname(elementHeader.find('._recipe-features a.icon_difficulty').attr("href"), "difficulty");
-        object.calories = (calories[0] !== null && calories[1] !== '') ?
-            calories :
-            []
+        object.calories = (calories[0] !== null && calories[1] !== '') ? calories : []
+        object.portion = elementIngredients.find('.portions #portions-value').text().trim()
         object.ingredients = ingredientsArr;
         object.steps = stepArr;
+        object.tips = tipsArr;
 
         res.json({
             method: req.method,
