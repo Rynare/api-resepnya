@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const moment = require("moment")
 const { URLSupport } = require('../URLSupport');
 
 const fetchRecipeDetail = async (req, res, response) => {
@@ -8,19 +9,9 @@ const fetchRecipeDetail = async (req, res, response) => {
         let object = {};
 
         const elementHeader = $('._recipe-header');
-        const elementNeeded = $('._product-popup');
         const elementIngredients = $('div._recipe-ingredients');
         const elementTutorial = $('._recipe-steps');
 
-        let product_usedArr = [];
-        elementNeeded.find('.product-popup-items>div>.card').each((i, e) => {
-            const thumbnail = $(e).find('picture.thumbnail').find('img').attr('data-src');
-            const name = $(e).find('div.title').text().replace(/\t/g, '');
-            product_usedArr.push({
-                name: name.trim(),
-                thumbnail: thumbnail
-            });
-        });
         let ingredientsArr = [];
         elementIngredients.find('.d-flex').each((i, e) => {
             let term = '';
@@ -63,10 +54,13 @@ const fetchRecipeDetail = async (req, res, response) => {
             elementHeader.find('._recipe-features a.icon_fire').text().trim()
         ]
 
+        const dataPublishedRaw = elementHeader.children().last().find('.author').text().split('|')[1].trim()
+        const dataPublishedFormated = moment(dataPublishedRaw, 'MMMM D, YYYY', 'id').format('YYYY-MM-DD');
+
         object.title = elementHeader.find('header h1').text().replace('\n', '').trim()
         object.thumbnail = elementHeader.find('picture .image').attr('data-src');
         object.author = elementHeader.children().last().find('.author').text().split('|')[0].trim()
-        object.datePublished = datePublished = elementHeader.children().last().find('.author').text().split('|')[1].trim()
+        object.datePublished = dataPublishedFormated
         object.desc = elementHeader.find('.excerpt').text().trim();
         object.servings = elementHeader.find('._kritique-rate div').attr('style');
         object.duration = URLSupport.getParameter(elementHeader.find('._recipe-features').find('a:not([data-tracking])').attr("href"), "time");
@@ -74,7 +68,6 @@ const fetchRecipeDetail = async (req, res, response) => {
         object.calories = (calories[0] !== null && calories[1] !== '') ?
             calories :
             []
-        object.product_useds = product_usedArr;
         object.ingredients = ingredientsArr;
         object.steps = stepArr;
 
