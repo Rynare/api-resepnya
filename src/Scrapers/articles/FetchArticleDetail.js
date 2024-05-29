@@ -47,7 +47,7 @@ const fetchArticleDetail = async (req, res, response) => {
         article_object.title = title.trim();
         article_object.thumbnail = thumbnail.trim();
         article_object.author = author;
-        article_object.datePublised = dataPublishedFormated;
+        article_object.datepublished = dataPublishedFormated;
         article_object.description = filtered.join("");
 
         res.json({
