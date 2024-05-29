@@ -75,7 +75,7 @@ const fetchRecipeDetail = async (req, res, response) => {
         const dataPublishedFormated = moment(dataPublishedRaw, 'MMMM D, YYYY', 'id').format('YYYY-MM-DD');
 
         object.title = elementHeader.find('header h1').text().replace('\n', '').trim()
-        object.thumbnail = elementHeader.find('picture .image').attr('data-src');
+        object.thumbnail = elementHeader.find('picture .image').attr('src');
         object.author = elementHeader.children().last().find('.author').text().split('|')[0].trim()
         object.datePublished = dataPublishedFormated
         object.description = elementHeader.find('.excerpt').text().trim();
