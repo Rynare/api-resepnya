@@ -12,34 +12,34 @@ const fetchArticleDetail = async (req, res, response) => {
         published = author[1].trim();
         author = author[0].trim();
         thumbnail = element.find('picture.thumbnail').find('img').attr('src') || '';
-        
+
         element.find('._rich-content > *').each((i, e) => {
-    const allowedHtmlTags = [
-        'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol'
-    ];
+            const allowedHtmlTags = [
+                'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol'
+            ];
 
-    $(e).find('noscript, figure').remove();
+            $(e).find('noscript, figure').remove();
 
-    const tagName = $(e).get(0).tagName.toLowerCase();
+            const tagName = $(e).get(0).tagName.toLowerCase();
 
-    if (allowedHtmlTags.includes(tagName)) {
-        if ($(e).find("a").length > 0) {
-            $(e).find("a").each((j, a) => {
-                const newElement = $('<span>');
-                const content = $(a).text();
-                newElement.text(content);
-                $(a).replaceWith(newElement);
-            });
-        }
+            if (allowedHtmlTags.includes(tagName)) {
+                if ($(e).find("a").length > 0) {
+                    $(e).find("a").each((j, a) => {
+                        const newElement = $('<span>');
+                        const content = $(a).text();
+                        newElement.text(content);
+                        $(a).replaceWith(newElement);
+                    });
+                }
 
-        if ($(e).text().replace(/\n/g, '').trim().length >= 1) {
-            const newElement = $(`<${tagName}>`);
-            const content = $(e).html();
-            newElement.html(content);
-            filtered.push($.html(newElement));
-        }
-    }
-});
+                if ($(e).text().replace(/\n/g, '').trim().length >= 1) {
+                    const newElement = $(`<${tagName}>`);
+                    const content = $(e).html();
+                    newElement.html(content);
+                    filtered.push($.html(newElement));
+                }
+            }
+        });
 
         article_object.title = title.trim();
         article_object.thumb = thumbnail.trim();
