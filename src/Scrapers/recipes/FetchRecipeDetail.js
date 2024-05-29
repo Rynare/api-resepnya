@@ -64,7 +64,7 @@ const fetchRecipeDetail = async (req, res, response) => {
         })
 
         let tagsArr = [];
-        elementTags.find("a").each((i,e) => {
+        elementTags.find("a").each((i, e) => {
             const rawHref = $(e).attr("href")
             const href = new URLSearchParams(rawHref)
             const tag = href.get("filters")
@@ -80,7 +80,7 @@ const fetchRecipeDetail = async (req, res, response) => {
         object.datePublished = dataPublishedFormated
         object.description = elementHeader.find('.excerpt').text().trim();
         object.duration = URLSupport.getParameter(elementHeader.find('._recipe-features').find('a:not([data-tracking])').attr("href"), "time");
-        object.difficulty = URLSupport.getPathname(elementHeader.find('._recipe-features a.icon_difficulty').attr("href"), "difficulty");
+        object.difficulty = URLSupport.getParameter(elementHeader.find('._recipe-features a.icon_difficulty').attr("href"), "difficulty");
         object.calories = (calories[0] !== null && calories[1] !== '') ? calories : []
         object.portion = elementIngredients.find('.portions #portions-value').text().trim()
         object.ingredients = ingredientsArr;
