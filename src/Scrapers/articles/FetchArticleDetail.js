@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const moment = require("moment")
 
 const fetchArticleDetail = async (req, res, response) => {
     try {
@@ -9,7 +10,9 @@ const fetchArticleDetail = async (req, res, response) => {
         let article_object = {};
         title = element.find('._article-header').find('.title').text();
         author = element.find('.info').find('.author').text().split('|');
-        published = author[1].trim();
+
+        const dataPublishedRaw = author[1].trim();
+        const dataPublishedFormated = moment(dataPublishedRaw, 'MMMM D, YYYY', 'id').format('YYYY-MM-DD');
         author = author[0].trim();
         thumbnail = element.find('picture.thumbnail').find('img').attr('src') || '';
 
@@ -42,9 +45,9 @@ const fetchArticleDetail = async (req, res, response) => {
         });
 
         article_object.title = title.trim();
-        article_object.thumb = thumbnail.trim();
+        article_object.thumbnail = thumbnail.trim();
         article_object.author = author;
-        article_object.date_published = published;
+        article_object.datePublised = dataPublishedFormated;
         article_object.description = filtered.join("");
 
         res.json({
